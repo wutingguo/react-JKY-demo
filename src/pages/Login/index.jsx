@@ -1,14 +1,22 @@
-import { Card, Form, Input, Button, Checkbox } from 'antd'
+import { loginGetToken } from '@/store/actions/login'
+import { Card, Form, Input, Button, Checkbox, message } from 'antd'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import logo from '../../assets/logo.png'
-import './index.scss'
+import styles from './index.module.scss'
 
 const Login = () => {
-  const getFromValue = (values) => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const getFromValue = async (values) => {
     console.log(values)
+    await dispatch(loginGetToken(values))
+    message.success('登录成功!!!', 1)
+    history.push('/home')
   }
   return (
-    <div className="login">
+    <div className={styles.root}>
       <Card className="login-container">
         <img className="login-logo" src={logo} alt="" />
         {/* 登录表单 */}
