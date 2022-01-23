@@ -1,19 +1,21 @@
 import { loginGetToken } from '@/store/actions/login'
 import { Card, Form, Input, Button, Checkbox, message } from 'antd'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import logo from '../../assets/logo.png'
 import styles from './index.module.scss'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const location = useLocation()
   const history = useHistory()
   const getFromValue = async (values) => {
     console.log(values)
     await dispatch(loginGetToken(values))
     message.success('登录成功!!!', 1)
-    history.push('/home')
+    const path = location?.state?.from || '/home'
+    history.replace(path)
   }
   return (
     <div className={styles.root}>

@@ -38,7 +38,12 @@ instance.interceptors.response.use(
     store.dispatch(loginOut())
     // 跳转到登录 history
 
-    history.push('/login')
+    history.replace({
+      pathname: '/login',
+      state: {
+        from: history.location.pathname,
+      },
+    })
 
     return Promise.reject(error)
   }
